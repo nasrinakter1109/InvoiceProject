@@ -1,0 +1,84 @@
+<div class="card">
+  <div class="card-header text-center bg-secondary">
+    <h4>Product Enty</h4>
+  </div>
+  <div class="card-body">
+    <div class="container">
+      <form [formGroup]="productForm">
+          <div class="form-group row">
+            <label class="col-md-4  text-right col-form-label">Product Name</label>
+            <div class="col-md-8">
+                <input formControlName="productName"  [ngClass]="{'is-invalid':( f['productName'].touched || f['productName'].dirty || isSubmit) && f['productName'].invalid}"  type="text" class="form-control" placeholder="Product Name">
+                <div *ngIf="f['productName'].invalid && ( f['productName'].touched || f['productName'].dirty || isSubmit)" class="text-danger">
+                  <i *ngIf="f['productName'].errors.required" class="text-danger">Product Name is required</i>
+              </div>
+            </div>
+        </div>  
+         <div class="form-group row">
+        <label class="col-md-4  text-right col-form-label">Description</label>
+        <div class="col-md-8">
+            <input formControlName="description" type="text" class="form-control" placeholder="Description">
+        </div>
+       </div> 
+       <div class="form-group row">
+        <label class="col-md-4  text-right col-form-label">Warehouse</label>
+        <div class="col-md-8">
+          <ng-select formControlName="warehouseId"  [items]="warehouseList"  bindLabel="warehouseName" bindValue="id" [ngClass]="{'is-invalid':( f['warehouseId'].touched || f['warehouseId'].dirty || isSubmit) && f['warehouseId'].invalid}"   placeholder="Select Warehouse"> </ng-select>
+          <div *ngIf="f['warehouseId'].invalid && ( f['warehouseId'].touched || f['warehouseId'].dirty || isSubmit)" class="text-danger">
+            <i *ngIf="f['warehouseId'].errors.required" class="text-danger">Warehouse is required</i>
+        </div>
+        </div>
+       </div> 
+        <div class="form-group row">
+          <label class="col-md-4  text-right col-form-label">Quantity</label>
+          <div class="col-md-8">
+              <input formControlName="quantity" type="number" class="form-control" placeholder="0.0">
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col-md-6 demo-inline-spacing" style="margin: 0 auto ;">
+            <button [ladda]="isSaved" (click)="saveProduct()" class="btn btn-success float-right mx-1">{{btnSave}}</button>
+            <button (click)="reset()" class="btn btn-primary float-right mx-1">Reset</button>   
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="card mt-3" >
+  <div class="card-body">
+      <div class="row">
+              <div class="row data-table bg-white border" >
+                  <table class="table table-bordered mb-0" >
+                    <thead>
+                      <tr>
+                         <th>SL No</th>
+                          <th>Product</th>
+                          <th>Warehouse</th>                          
+                          <th>Detail</th>
+                          <th>Quantity</th>
+                          <th>Action</th>
+                       </tr>
+                    </thead>
+                  <tbody>                    
+                      <tr *ngIf="isLoading">
+                          <td colspan="10" class="text-center text-primary">
+                              <img src="../../../../../assets/img/loading.gif" height="40" width="40" /> Loading ...
+                          </td>
+                      </tr>
+                       <tr *ngFor="let product of productList;let i=index" > 
+                          <td>{{i+1}}</td>
+                          <td>{{product.productName}}</td>
+                          <td>{{product.warehouseName}}</td>
+                          <td>{{product.description}}</td>
+                          <td>{{product.quantity}}</td>
+                          <td>
+                            <button (click)="onSelectEdit(product.id)" class="btn btn-primary"><span class="fas fa-edit"></span>Edit</button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+      </div>
+   </div>
+</div>
+</div>

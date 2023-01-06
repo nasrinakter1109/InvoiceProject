@@ -1,0 +1,265 @@
+<form [formGroup]="invoiceForm">
+<div class="card">
+  <div class="card-header">
+    <h5> Add Invoice</h5>
+  </div>
+  <div class="card-body">
+   
+        <div class="row py-2 my-0 p-0 ">
+          <div class="col-md-12   py-0 my-0">
+              <div class="row no-gutters">
+                  <div class="col-md-2">
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                            <div class="input-group" >
+                                <input formControlName="invoiceDateNgb"  name="setNgbDate" (ngModelChange)="onSelectDate()"
+                                class="form-control" placeholder="dd-mm-yyyy" [minDate]="minDate" [maxDate]="maxDate"
+                                ngbDatepicker #d1="ngbDatepicker" readonly>
+                                <div class="input-group-append">
+                                    <button class="input-group-text" (click)="d1.toggle();" type="button">
+                                      <span class="ion ion-md-calendar" style="cursor: pointer;"></span>
+                                    </button>
+                                </div>
+                                </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-1">
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <input formControlName="invoiceNo" [ngClass]="{'is-invalid':( f['invoiceNo'].touched || f['invoiceNo'].dirty || isSubmit) && f['invoiceNo'].invalid}" type="number" class="form-control" placeholder="Invoice No">
+                              <div *ngIf="f['invoiceNo'].invalid && ( f['invoiceNo'].touched || f['invoiceNo'].dirty || isSubmit)" class="text-danger">
+                                <i *ngIf="f['invoiceNo'].errors.required" class="text-danger">Invoice No is required</i>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class=" col-md-2">
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                           <ng-select formControlName="outletId" placeholder="Outlet" >
+                              <ng-option [value]="1">Outlet 1</ng-option>
+                              <ng-option [value]="2">Outlet 2</ng-option>
+                           </ng-select>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <ng-select formControlName="salesTypeId" placeholder="Sales Type" >
+                                <ng-option [value]="1">Retail</ng-option>
+                                <ng-option [value]="2">Hole Sale</ng-option>
+                             </ng-select>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-md-2">
+                    <div class="form-group row">
+                     <div class="col-sm-12">
+                      <div class="input-group">
+                        <ng-select formControlName="customerId"  [items]="customerList"  bindLabel="customerName" bindValue="id" (change)="onSelectCustomer($event)" style="width: 133px;"    placeholder="Select Customer"> </ng-select>
+                        <div class="input-group-append">
+                            <button  (click)="createNewItem(customerModal)" class="input-group-text btn btn-info"
+                            type="button">
+                             <span class="fa fa-plus" style="cursor: pointer;"></span>
+                             </button>
+                        </div>
+                        </div>
+                        </div> 
+                        </div>                       
+                  </div>            
+                <div class="col-md-1">
+                  <div class="form-group row">
+                      <div class="col-sm-12">
+                        <input formControlName="customerName" class="form-control" placeholder="Customer Name" disabled> 
+                      </div>
+                  </div>
+              </div> 
+              <div class="col-md-1">
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                      <input formControlName="customerMobile" class="form-control" placeholder="Customer Mobile" disabled>
+                    </div>
+                </div>
+            </div>   
+            <div class="col-md-1">
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                      <input formControlName="customerAddress" class="form-control" placeholder="Customer Address" disabled>
+                    </div>
+                </div>
+            </div>            
+              </div>
+          </div>
+      </div>
+
+      <div class="row py-0 my-0 p-0">
+        <div class="col-md-10   py-0 my-0">
+            <div class="row no-gutters">
+        <div class=" col-md-2">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <ng-select formControlName="paymentTypeId" placeholder="Payment Type" >
+                        <ng-option [value]="1">Payment Type 1</ng-option>
+                        <ng-option [value]="2">Payment Type 2</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class=" col-md-2">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <ng-select formControlName="invoiceTypeId" placeholder="Invoice Type" >
+                        <ng-option [value]="1">Invoice Type 1</ng-option>
+                        <ng-option [value]="2">Invoice Type 2</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+    <div class=" col-md-2">
+        <div class="form-group row">
+            <div class="col-sm-12">
+            <input formControlName="refNo" type="text" class="form-control" placeholder="Reference No">
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+<div class="card mt-3" >
+    <div class="card-body">
+        <div class="row ">
+            <div class="col-md-5 mt-1">
+                <h5 class="text-center">Details</h5>
+            </div>
+            <div class="col-md-7">
+                <ng-select  [items]="productList"  bindLabel="productName" bindValue="id" (change)="onSelectProduct($event)"    placeholder="Select Product"> </ng-select>   
+            </div>
+                   
+            </div>
+        <div class="row mt-2">
+                <div class="row data-table bg-white border" >
+                    <table class="table table-bordered mb-0" >
+                      <thead>
+                        <tr>
+                            <th>Warehouse</th>
+                            <th>Product</th>
+                            <th>Detail</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Price(Tk)</th>
+                            <th>Amount(Tk)</th>
+                            <th>Discount(%)</th>
+                            <th>Dicount Amount(Th.)</th>
+                            <th>VAT(%)</th>
+                            <th>VAT(Tk)</th>
+                            <th>SubTotal(Tk)</th>
+                            <th>Action</th>
+                         </tr>
+                      </thead>
+                    <tbody> 
+                        <tr *ngFor="let product of productForm.controls;let i=index" [formGroup]="product">                         
+                            <td><ng-select formControlName="warehouseId"  [items]="warehouseList"  bindLabel="warehouseName" bindValue="id"    placeholder="Select Warehouse"></ng-select></td>
+                            <td>{{product.value.productName}}</td>
+                            <td ><input formControlName="productDescription" type="text" class="form-control" placeholder="Description"></td>
+                            <td><input formControlName="quantity" type="number" class="form-control" placeholder="0.0"></td>
+                            <td><ng-select formControlName="unitId" [ngClass]="{'is-invalid':( productForm.controls[i].get('unitId').touched || productForm.controls[i].get('unitId').dirty || isSubmit) && productForm.controls[i].get('unitId').invalid}" [items]="unitList"  bindLabel="unitName" bindValue="id"    placeholder="Select Warehouse"></ng-select>
+                                <div *ngIf="productForm.controls[i].get('unitId').invalid && ( productForm.controls[i].get('unitId').touched || productForm.controls[i].get('unitId').dirty || isSubmit)" class="text-danger">
+                                    <i *ngIf="productForm.controls[i].get('unitId').errors.required" class="text-danger">Unit is required</i>
+                                </div>
+                            </td>
+                            <td style="text-align: right;" ><input (keyup)="onChangeQty(i)" formControlName="price" type="number" class="form-control" placeholder="0.0"></td>
+                            <td style="text-align: right;" ><input  formControlName="amount" type="number" class="form-control" placeholder="0.0"></td>
+                            <td style="text-align: right;" ><input (keyup)="onChangeQty(i);onChangeDiscRate(i)" formControlName="discountRate" type="number" class="form-control" placeholder="0.0"></td>
+                            <td style="text-align: right;" ><input formControlName="discountAmount" type="number" class="form-control" placeholder="0.0" disabled></td>
+                            <td style="text-align: right;" ><input (keyup)="onChangeQty(i);onChangeVatRate(i)" formControlName="vat" type="number" class="form-control" placeholder="0.0"></td>
+                            <td style="text-align: right;" ><input  formControlName="vatAmount" type="number" class="form-control" placeholder="0.0" disabled></td>
+                            <td style="text-align: right;" ><input formControlName="subTotal" type="number" class="form-control" placeholder="0.0"></td>
+                            <td><button (click)="removeRow(i)" class="btn btn-sm btn-danger px-3" ><span
+                                class="fas fa-trash "></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+     </div>
+ </div>
+</div>
+<div class="card mt-3">
+    <div class="card-body p-0 mt-2 py-2 ">
+                <div class="row ">
+                        <div class="col-1 p-0">
+                            <label class="col-sm-12 text-center col-form-label">Inv. Amt</label>
+                            <div class="col-sm-12">
+                              <input formControlName="invoiceAmount" type="number" class="form-control" placeholder="0.0">
+                            </div>
+                        </div>
+                        <div class="col-1 p-0">
+                            <label class="col-sm-12 text-center col-form-label">Ship.Cost</label>
+                            <div class="col-sm-12">
+                              <input formControlName="shippingAmount" (keyup)="onInvoiceCalculation()" type="number" class="form-control" placeholder="0.0">
+                            </div>
+                        </div>
+                        <div class="col-1 p-0">
+                            <label class="col-sm-12 text-center col-form-label">Disc(%)</label>
+                            <div class="col-sm-12">
+                              <input formControlName="discountRate" (keyup)="onInvoiceCalculation()" type="number" class="form-control" placeholder="0.0">
+                            </div>
+                        </div>
+                    <div class="col-1 p-0">
+                        <label class="col-sm-12 text-center col-form-label">Discount</label>
+                        <div class="col-sm-12">
+                            <input type="number" formControlName="discountAmt" class="form-control" placeholder="0.0" disabled>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <label class="col-sm-12 text-center col-form-label">T.VAT</label>
+                        <div class="col-sm-12">
+                            <input type="number" formControlName="totalVat" class="form-control" placeholder="0.0" disabled>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <label class="col-sm-12 text-center col-form-label">Less Amt</label>
+                        <div class="col-sm-12">
+                            <input formControlName="lessAmt" (keyup)="onInvoiceCalculation()" type="number" class="form-control" placeholder="0.0">
+                        </div>
+                    </div>
+                    <div class="col-2 p-0">
+                        <label class="col-sm-12 text-center col-form-label">Cash Amt</label>
+                        <div class="col-sm-12">
+                            <input formControlName="cashAmt" (keyup)="onInvoiceCalculation()" type="number" class="form-control" placeholder="0.00">
+                        </div>
+                    </div>
+                      <div class="col-1 p-0">
+                        <label class="col-sm-12 text-center col-form-label">Adv Amt</label>
+                        <div class="col-sm-12">
+                            <input formControlName="advAmt" (keyup)="onInvoiceCalculation()" type="number" class="form-control" placeholder="0.00">
+                        </div>
+                    </div>   
+                    <div class="col-2 p-0">
+                        <label class="col-sm-12 text-center col-form-label">Change Amt</label>
+                        <div class="col-sm-12">
+                        <input formControlName="chgeAmt" (keyup)="onInvoiceCalculation()" type="number" class="form-control" placeholder="0.00">
+                        </div>
+                  </div>
+                  <div class="col-1 p-0">
+                    <label class="col-sm-12 text-center col-form-label">Total</label>
+                    <div class="col-sm-12">
+                        <input formControlName="total" type="number" class="form-control" placeholder="0.0">
+                    </div>
+                </div>             
+                </div>
+      </div>
+</div>
+<div class="row mt-3">
+        <button [ladda]="isSaved" (click)="saveInvoice()" class="btn btn-success float-right mx-1">Save</button>
+        <button (click)="reset()" class="btn btn-danger float-right mx-1">Reset</button>  
+    
+</div>
+</form>
+<ng-template #customerModal>
+    <app-customer (customers)="onNewCustomerAdd($event)"></app-customer>
+</ng-template>

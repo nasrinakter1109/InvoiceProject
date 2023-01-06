@@ -1,0 +1,81 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Customer
+      <span (click)="cancel()" class="text-danger fas fa-window-close float-right"></span>
+    </h5>
+   
+  </div>
+  <div class="card-body">
+    <form [formGroup]="customerForm">
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <input formControlName="customerName" [ngClass]="{'is-invalid':( f['customerName'].touched || f['customerName'].dirty || isSubmit) && f['customerName'].invalid}"  type="text" class="form-control" placeholder="Customer">
+              <div *ngIf="f['customerName'].invalid && ( f['customerName'].touched || f['customerName'].dirty || isSubmit)" class="text-danger">
+                <i *ngIf="f['customerName'].errors.required" class="text-danger">Customer Name is required</i>
+            </div>
+            </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <input formControlName="entyDateNgb" [ngClass]="{'is-invalid':( f['entyDateNgb'].touched || f['entyDateNgb'].dirty || isSubmit) && f['entyDateNgb'].invalid}"  name="date" (ngModelChange)="onSelectDate()"
+            class="form-control"  placeholder="Joining Date" [minDate]="minDate" [maxDate]="maxDate" 
+            ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle();" (keydown.enter)="d1.toggle();" >
+            <div *ngIf="f['entyDateNgb'].invalid && ( f['entyDateNgb'].touched || f['entyDateNgb'].dirty || isSubmit)" class="text-danger">
+              <i *ngIf="f['entyDateNgb'].errors.required" class="text-danger">Joining Date is required</i>
+          </div>
+          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <input formControlName="phoneNo" type="text" class="form-control" placeholder="Phone">
+        </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <input formControlName="fax" type="text" class="form-control" placeholder="Fax">
+      </div>
+  </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <ng-select formControlName="customerType" placeholder="Type" >
+                <ng-option [value]="'Regular Customer'"> Regular Customer</ng-option>
+                <ng-option [value]="'Irregular Customer'"> Irregular Customer</ng-option>
+             </ng-select>
+            </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <input formControlName="address" type="text" class="form-control" placeholder="Address">
+          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <input formControlName="mobile" type="text" class="form-control" placeholder="Mobile">
+        </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <input formControlName="email" type="text" [ngClass]="{ 'is-invalid': ( f['email'].touched || f['email'].dirty || isSubmit) && f['email'].errors }" placeholder="Enter Customer Email" class="form-control">
+        <div *ngIf="( f['email'].touched || f['email'].dirty || isSubmit) && f['email'].errors" class="invalid-feedback">
+            <!-- <div *ngIf="f['email'].errors.required">Email is required</div> -->
+            <div *ngIf="f['email'].errors.email">Email must be a valid email address</div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+        <hr>
+      <div class="row">
+        <div class="row col-md-4 demo-inline-spacing center" style="margin: 0 auto;">
+          <button [ladda]="isSaved" (click)="saveCustomer()" class="btn btn-success float-right mx-1">Create</button>
+          <button (click)="reset()" class="btn btn-primary float-right mx-1">Reset</button>          
+      </div>
+      </div>
+      
+    </form>
+  </div>
+</div>
